@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anurag Maurya — Issue 01 | Backend & AI Systems</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #F4F1EA;
+      --paper-alt: #EBE6DC;
+      --ink: #121212;
+      --ink-muted: #55524C;
+      --accent: #C83E2B;
+      --rule: #121212;
+      --rule-light: rgba(18, 18, 18, 0.18);
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      background: var(--paper);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* --- MASTHEAD --- */
+    .masthead {
+      border-bottom: 3px double var(--rule);
+      padding: 18px 0 14px;
+      margin-bottom: 36px;
+    }
+
+    .masthead-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--rule-light);
+    }
+
+    .masthead-title {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 9vw, 7.2rem);
+      font-weight: 700;
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      text-align: center;
+      padding: 18px 0 10px;
+      text-transform: uppercase;
+    }
+
+    .masthead-nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 28px;
+      padding-top: 12px;
+      border-top: 1px solid var(--rule-light);
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .masthead-nav a {
+      position: relative;
+      padding-bottom: 2px;
+    }
+
+    .masthead-nav a:hover {
+      color: var(--accent);
+    }
+
+    /* --- COVER SPREAD (HERO) --- */
+    .cover-spread {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 0;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 64px;
+    }
+
+    .cover-left {
+      padding: 40px 44px 40px 0;
+      border-right: 1px solid var(--rule);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .kicker {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 18px;
+      display: inline-block;
+    }
+
+    .cover-headline {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 5.2vw, 4.8rem);
+      font-weight: 600;
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    .cover-headline em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--accent);
+    }
+
+    .cover-deck {
+      font-size: 1.12rem;
+      color: var(--ink-muted);
+      max-width: 540px;
+      margin-bottom: 36px;
+    }
+
+    .cover-index {
+      border-top: 1px solid var(--rule-light);
+      padding-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px 24px;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+    }
+
+    .cover-index a {
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--rule-light);
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .cover-index a:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .cover-right {
+      padding: 40px 0 40px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .portrait-frame {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      background: var(--paper-alt);
+      border: 1px solid var(--rule);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portrait-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(1.06);
+      transition: filter 0.45s ease, transform 0.6s ease;
+      display: block;
+    }
+
+    .portrait-frame:hover img {
+      filter: grayscale(0%) contrast(1);
+      transform: scale(1.02);
+    }
+
+    .portrait-fallback {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--ink);
+      color: var(--paper);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .portrait-fallback span {
+      font-family: var(--serif);
+      font-size: 6rem;
+      font-style: italic;
+      line-height: 1;
+    }
+
+    .portrait-fallback small {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 12px;
+      opacity: 0.7;
+    }
+
+    .portrait-caption {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ink-muted);
+      margin-top: 12px;
+    }
+
+    /* --- SECTION HEADERS --- */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 2px solid var(--rule);
+      padding-bottom: 10px;
+      margin-bottom: 36px;
+    }
+
+    .section-header h2 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 3.8vw, 3.2rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .section-num {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    section {
+      margin-bottom: 84px;
+    }
+
+    /* --- 01. THE PROFILE (ABOUT) --- */
+    .editorial-article {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .dropcap-copy p {
+      font-size: 1.08rem;
+      margin-bottom: 20px;
+      color: #242320;
+    }
+
+    .dropcap-copy p:first-of-type::first-letter {
+      font-family: var(--serif);
+      font-size: 4.4rem;
+      font-weight: 700;
+      float: left;
+      line-height: 0.78;
+      padding: 6px 12px 0 0;
+      color: var(--accent);
+    }
+
+    .pull-quote {
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      padding: 28px 0;
+    }
+
+    .pull-quote blockquote {
+      font-family: var(--serif);
+      font-size: 1.9rem;
+      font-style: italic;
+      line-height: 1.25;
+      margin-bottom: 18px;
+    }
+
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    .stat-box {
+      border-left: 2px solid var(--accent);
+      padding-left: 14px;
+    }
+
+    .stat-val {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ink-muted);
+    }
+
+    /* --- 02. SELECTED SYSTEMS (INTERACTIVE DOSSIER) --- */
+    .dossier-list {
+      border-top: 1px solid var(--rule);
+    }
+
+    .dossier-item {
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .dossier-trigger {
+      width: 100%;
+      background: transparent;
+      border: none;
+      padding: 26px 0;
+      display: grid;
+      grid-template-columns: 70px 1.6fr 1fr 40px;
+      align-items: baseline;
+      text-align: left;
+      cursor: pointer;
+      color: var(--ink);
+      transition: background 0.2s;
+    }
+
+    .dossier-trigger:hover .dossier-title {
+      color: var(--accent);
+    }
+
+    .dossier-id {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+    }
+
+    .dossier-title {
+      font-family: var(--serif);
+      font-size: clamp(1.5rem, 2.5vw, 2.1rem);
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .dossier-tags {
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+    }
+
+    .dossier-plus {
+      font-family: var(--mono);
+      font-size: 1.4rem;
+      text-align: right;
+      transition: transform 0.25s ease;
+    }
+
+    .dossier-item.open .dossier-plus {
+      transform: rotate(45deg);
+      color: var(--accent);
+    }
+
+    .dossier-body {
+      display: none;
+      grid-template-columns: 70px 1.6fr 1fr;
+      gap: 24px;
+      padding: 0 0 32px;
+    }
+
+    .dossier-item.open .dossier-body {
+      display: grid;
+    }
+
+    .dossier-desc {
+      grid-column: 2;
+      font-size: 1rem;
+      color: #2A2926;
+    }
+
+    .dossier-impact {
+      grid-column: 3;
+      border-left: 1px solid var(--rule-light);
+      padding-left: 24px;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+    }
+
+    .dossier-impact strong {
+      display: block;
+      color: var(--ink);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* --- 03. CAREER LEDGER --- */
+    .ledger-row {
+      display: grid;
+      grid-template-columns: 180px 1fr 1.6fr;
+      gap: 32px;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--rule-light);
+    }
+
+    .ledger-row:last-child {
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .ledger-date {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      padding-top: 4px;
+    }
+
+    .ledger-company h3 {
+      font-family: var(--serif);
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .ledger-role {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 4px;
+    }
+
+    .ledger-notes {
+      list-style: none;
+    }
+
+    .ledger-notes li {
+      position: relative;
+      padding-left: 16px;
+      margin-bottom: 8px;
+      font-size: 0.96rem;
+      color: #2A2926;
+    }
+
+    .ledger-notes li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    /* --- 04. OFF THE CLOCK (LIFESTYLE SPREAD) --- */
+    .lifestyle-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .lifestyle-col {
+      padding: 36px 32px;
+      border-right: 1px solid var(--rule);
+    }
+
+    .lifestyle-col:first-child {
+      padding-left: 0;
+    }
+
+    .lifestyle-col:last-child {
+      border-right: none;
+      padding-right: 0;
+    }
+
+    .lifestyle-label {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .lifestyle-col h3 {
+      font-family: var(--serif);
+      font-size: 2.1rem;
+      font-weight: 600;
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+
+    .lifestyle-col p {
+      font-size: 0.98rem;
+      color: var(--ink-muted);
+    }
+
+    /* --- 05. COLOPHON & CONTACT --- */
+    .colophon {
+      border-top: 3px double var(--rule);
+      padding-top: 48px;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 48px;
+      align-items: end;
+    }
+
+    .colophon-cta h2 {
+      font-family: var(--serif);
+      font-size: clamp(2.4rem, 4.5vw, 4rem);
+      font-weight: 600;
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+
+    .email-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--mono);
+      font-size: 0.95rem;
+      padding: 14px 24px;
+      border: 1px solid var(--rule);
+      background: var(--ink);
+      color: var(--paper);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .email-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .colophon-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .colophon-links a {
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--rule-light);
+    }
+
+    .colophon-links a:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .footer-fine {
+      margin-top: 48px;
+      padding-top: 16px;
+      border-top: 1px solid var(--rule-light);
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 960px) {
+      .cover-spread,
+      .editorial-article,
+      .ledger-row,
+      .lifestyle-grid,
+      .colophon {
+        grid-template-columns: 1fr;
+      }
+
+      .cover-left {
+        padding: 32px 0;
+        border-right: none;
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .cover-right {
+        padding: 32px 0;
+      }
+
+      .dossier-trigger {
+        grid-template-columns: 44px 1fr 32px;
+      }
+
+      .dossier-tags {
+        display: none;
+      }
+
+      .dossier-body {
+        grid-template-columns: 1fr;
+      }
+
+      .dossier-desc,
+      .dossier-impact {
+        grid-column: 1;
+        border-left: none;
+        padding-left: 0;
+      }
+
+      .lifestyle-col {
+        padding: 28px 0;
+        border-right: none;
+        border-bottom: 1px solid var(--rule-light);
+      }
+
+      .lifestyle-col:last-child {
+        border-bottom: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MASTHEAD -->
+  <header class="masthead">
+    <div class="masthead-meta">
+      <span>Vol. 01 · Gurgaon, India</span>
+      <span>anuragmaurya.in</span>
+      <span>Backend &amp; AI Systems</span>
+    </div>
+    <div class="masthead-title">Anurag Maurya</div>
+    <nav class="masthead-nav">
+      <a href="#profile">01. Profile</a>
+      <a href="#systems">02. Systems</a>
+      <a href="#ledger">03. Career Ledger</a>
+      <a href="#off-clock">04. Off the Clock</a>
+      <a href="#contact">05. Contact</a>
+    </nav>
+  </header>
+
+  <!-- COVER SPREAD -->
+  <section class="cover-spread">
+    <div class="cover-left">
+      <div>
+        <span class="kicker">Software Engineer · Delhivery (TransportOne)</span>
+        <h1 class="cover-headline">
+          Systems that <em>scale</em>.<br />
+          Stories that travel.
+        </h1>
+        <p class="cover-deck">
+          I architect distributed backend workflows, autonomous AI voice agents, and high-throughput microservices—turning messy logistics and financial operations into reliable software.
+        </p>
+      </div>
+
+      <div class="cover-index">
+        <a href="#profile"><span>01. The Profile</span><span>→</span></a>
+        <a href="#systems"><span>02. Selected Systems</span><span>→</span></a>
+        <a href="#ledger"><span>03. Career Ledger</span><span>→</span></a>
+        <a href="#off-clock"><span>04. Off the Clock</span><span>→</span></a>
+      </div>
+    </div>
+
+    <div class="cover-right">
+      <div class="portrait-frame">
+        <img
+          src="./profile.jpg"
+          alt="Anurag Maurya"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        />
+        <div class="portrait-fallback" style="display:none;">
+          <span>AM</span>
+          <small>Upload profile.jpg to repo root</small>
+        </div>
+      </div>
+      <div class="portrait-caption">
+        <span>Fig. 01 — Anurag Maurya</span>
+        <span>28.4595° N, 77.0266° E</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 01. THE PROFILE -->
+  <section id="profile">
+    <div class="section-header">
+      <h2>The Profile</h2>
+      <span class="section-num">Section 01</span>
+    </div>
+
+    <div class="editorial-article">
+      <div class="dropcap-copy">
+        <p>
+          My path into software didn’t start with a computer science textbook—it started in Mechanical Engineering at NIT Allahabad. Somewhere between studying physical systems and writing scripts to automate tedious work, I realized I loved designing things that run cleanly under load.
+        </p>
+        <p>
+          Today, I build backend and AI systems at Delhivery in Gurgaon, working across a 15+ microservice ecosystem powered by Kafka, Redis, Python, and Node.js. Whether it’s preventing race conditions in B2B billing state machines or giving an autonomous voice agent secure access to internal APIs via MCP, I care most about clarity, resilience, and measurable impact.
+        </p>
+      </div>
+
+      <aside class="pull-quote">
+        <blockquote>
+          “Good architecture feels invisible—until something fails, and the system handles it gracefully anyway.”
+        </blockquote>
+        <div class="stats-strip">
+          <div class="stat-box">
+            <div class="stat-val">15+</div>
+            <div class="stat-label">Microservices Scaled</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val">70%</div>
+            <div class="stat-label">Faster Prod Delivery</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val">24/7</div>
+            <div class="stat-label">Autonomous Voice AI</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val">Lakhs</div>
+            <div class="stat-label">Daily Transactions</div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 02. SELECTED SYSTEMS -->
+  <section id="systems">
+    <div class="section-header">
+      <h2>Selected Systems</h2>
+      <span class="section-num">Section 02 · Click to Expand</span>
+    </div>
+
+    <div class="dossier-list">
+      <div class="dossier-item open">
+        <button class="dossier-trigger" type="button">
+          <span class="dossier-id">SYS-01</span>
+          <span class="dossier-title">Autonomous Voice Agent “Priya” &amp; MCP Server</span>
+          <span class="dossier-tags">MCP · LLMs · ReachAll · WhatsApp</span>
+          <span class="dossier-plus">+</span>
+        </button>
+        <div class="dossier-body">
+          <div class="dossier-desc">
+            Engineered a 24/7 autonomous voice agent for transporter queries powered by an internal Model Context Protocol (MCP) server managing secure, token-based auth to expose microservice APIs as LLM tools. Designed a multi-agent fallback loop using ReachAll APIs where an outbound agent auto-calls transporters for missing context and aggregates updates back via WhatsApp.
+          </div>
+          <div class="dossier-impact">
+            <strong>Impact</strong>
+            Automated round-the-clock transporter support with zero manual handoffs for standard queries.
+          </div>
+        </div>
+      </div>
+
+      <div class="dossier-item">
+        <button class="dossier-trigger" type="button">
+          <span class="dossier-id">SYS-02</span>
+          <span class="dossier-title">Distributed B2B Financial &amp; Billing Engine</span>
+          <span class="dossier-tags">State Machine · Redis Locks · Kafka</span>
+          <span class="dossier-plus">+</span>
+        </button>
+        <div class="dossier-body">
+          <div class="dossier-desc">
+            Architected the end-to-end B2B financial workflow covering Invoices and Debit/Credit Notes. Built around a strict distributed state machine with Redis distributed locking to eliminate race conditions during concurrent settlement updates.
+          </div>
+          <div class="dossier-impact">
+            <strong>Impact</strong>
+            Cut planning-to-production delivery time by 70% while guaranteeing financial data integrity.
+          </div>
+        </div>
+      </div>
+
+      <div class="dossier-item">
+        <button class="dossier-trigger" type="button">
+          <span class="dossier-id">SYS-03</span>
+          <span class="dossier-title">Hybrid AI Invoice Validation Engine</span>
+          <span class="dossier-tags">Gemini LLM · Python · HITL</span>
+          <span class="dossier-plus">+</span>
+        </button>
+        <div class="dossier-body">
+          <div class="dossier-desc">
+            Developed a hybrid validation pipeline combining Gemini LLM with deterministic Python rules to parse unstructured transporter PDFs, cross-check freight charges against contracts, and flag SLA deviations automatically—routing low-confidence edge cases to a human-in-the-loop queue.
+          </div>
+          <div class="dossier-impact">
+            <strong>Impact</strong>
+            Turned manual PDF auditing into an automated, confidence-scored verification pipeline.
+          </div>
+        </div>
+      </div>
+
+      <div class="dossier-item">
+        <button class="dossier-trigger" type="button">
+          <span class="dossier-id">SYS-04</span>
+          <span class="dossier-title">DynamoDB CDC &amp; Self-Hosted Superset</span>
+          <span class="dossier-tags">AWS Lambda · DynamoDB · OpenSearch · Superset</span>
+          <span class="dossier-plus">+</span>
+        </button>
+        <div class="dossier-body">
+          <div class="dossier-desc">
+            Co-designed a DynamoDB-backed architecture with a real-time Lambda CDC pipeline syncing writes to OpenSearch, replacing a costly, high-latency internal service. Independently migrated customer analytics from paid QuickSight ($3/user) to self-hosted Apache Superset end-to-end.
+          </div>
+          <div class="dossier-impact">
+            <strong>Impact</strong>
+            Eliminated per-seat analytics licensing costs and unblocked reporting for all customers.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03. CAREER LEDGER -->
+  <section id="ledger">
+    <div class="section-header">
+      <h2>Career Ledger</h2>
+      <span class="section-num">Section 03 · 2017—Present</span>
+    </div>
+
+    <div class="ledger-row">
+      <div class="ledger-date">Apr 2025 — Present<br />Gurgaon, India</div>
+      <div class="ledger-company">
+        <h3>Delhivery</h3>
+        <div class="ledger-role">Software Engineer · TransportOne</div>
+      </div>
+      <ul class="ledger-notes">
+        <li>Scaling a 15+ microservice ecosystem with Kafka and Redis processing lakhs of daily transactions.</li>
+        <li>Architected B2B billing state machines, autonomous voice agent “Priya” via MCP, and AI invoice validation.</li>
+        <li>Migrated customer analytics to self-hosted Apache Superset and co-designed DynamoDB + OpenSearch CDC.</li>
+      </ul>
+    </div>
+
+    <div class="ledger-row">
+      <div class="ledger-date">Sep 2024 — Oct 2024<br />Noida, India</div>
+      <div class="ledger-company">
+        <h3>Attentive AI</h3>
+        <div class="ledger-role">Software Engineer</div>
+      </div>
+      <ul class="ledger-notes">
+        <li>Implemented GCP Pub/Sub topics and subscribers enabling real-time cross-service database updates via Django ORM.</li>
+      </ul>
+    </div>
+
+    <div class="ledger-row">
+      <div class="ledger-date">Sep 2023 — Aug 2024<br />Bangalore, India</div>
+      <div class="ledger-company">
+        <h3>Fincent Software Services</h3>
+        <div class="ledger-role">Software Engineer</div>
+      </div>
+      <ul class="ledger-notes">
+        <li>Built an API automation framework (Supertest, Mocha, Chai), cutting test cycles from 1 day to 10 minutes.</li>
+        <li>Automated BullMQ/Node.js scheduled jobs across 1,000+ Stripe accounts to recover missed webhooks.</li>
+        <li>Set up AWS CI/CD pipelines, streamlining release cadence across environments.</li>
+      </ul>
+    </div>
+
+    <div class="ledger-row">
+      <div class="ledger-date">Nov 2021 — Jun 2023<br />Bangalore, India</div>
+      <div class="ledger-company">
+        <h3>Sandvine Technologies</h3>
+        <div class="ledger-role">Software Engineer</div>
+      </div>
+      <ul class="ledger-notes">
+        <li>Built a multiprocessing Python/Pandas test framework, cutting regression runs from days to 2 hours.</li>
+        <li>Delivered Python/Django backend features that improved application performance by 30%.</li>
+      </ul>
+    </div>
+
+    <div class="ledger-row">
+      <div class="ledger-date">Jul 2017 — May 2021<br />Allahabad, India</div>
+      <div class="ledger-company">
+        <h3>NIT Allahabad</h3>
+        <div class="ledger-role">B.Tech · Mechanical Engineering · 7.86 CGPA</div>
+      </div>
+      <ul class="ledger-notes">
+        <li>Built foundational problem-solving and engineering discipline before pivoting full-time into software systems.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 04. OFF THE CLOCK -->
+  <section id="off-clock">
+    <div class="section-header">
+      <h2>Off the Clock</h2>
+      <span class="section-num">Section 04 · Beyond Code</span>
+    </div>
+
+    <div class="lifestyle-grid">
+      <div class="lifestyle-col">
+        <div class="lifestyle-label">01 · Court &amp; Reflex</div>
+        <h3>Badminton</h3>
+        <p>
+          Nothing resets a long day of debugging faster than a fast-paced rally. Badminton keeps my reflexes sharp, clears the head, and brings out the competitive streak away from a keyboard.
+        </p>
+      </div>
+
+      <div class="lifestyle-col">
+        <div class="lifestyle-label">02 · Miles &amp; Detours</div>
+        <h3>Exploring New Places</h3>
+        <p>
+          Always up for a change of scenery—whether it’s a quick weekend getaway to the hills or wandering through an unfamiliar neighborhood just to see how a new city moves.
+        </p>
+      </div>
+
+      <div class="lifestyle-col">
+        <div class="lifestyle-label">03 · The Culinary Trail</div>
+        <h3>Good Food, Good Company</h3>
+        <p>
+          A bit of a foodie at heart. Half the fun of visiting a new place is hunting down local favorites, trying new flavors, and finding spots worth going back to.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05. COLOPHON & CONTACT -->
+  <footer id="contact" class="colophon">
+    <div class="colophon-cta">
+      <span class="kicker">Open to Conversations</span>
+      <h2>Let’s build something worth talking about.</h2>
+      <button class="email-btn" id="copyEmailBtn" type="button">
+        <span>myanurag0202@gmail.com</span>
+        <span id="copyStatus">Copy</span>
+      </button>
+    </div>
+
+    <div class="colophon-links">
+      <a href="https://github.com/anurag-maurya" target="_blank" rel="noopener">
+        <span>GitHub</span><span>github.com/anurag-maurya ↗</span>
+      </a>
+      <a href="https://linkedin.com/in/anuragmaurya" target="_blank" rel="noopener">
+        <span>LinkedIn</span><span>in/anuragmaurya ↗</span>
+      </a>
+      <a href="https://leetcode.com/anurag" target="_blank" rel="noopener">
+        <span>LeetCode</span><span>leetcode/anurag ↗</span>
+      </a>
+      <a href="tel:+919935561932">
+        <span>Phone</span><span>+91 9935561932 ↗</span>
+      </a>
+    </div>
+  </footer>
+
+  <div class="footer-fine">
+    <span>© 2026 Anurag Maurya</span>
+    <span>Set in Cormorant Garamond, DM Sans &amp; JetBrains Mono</span>
+  </div>
+
+  <script>
+    // Accordion for Selected Systems
+    document.querySelectorAll('.dossier-trigger').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.dossier-item').forEach((el) => el.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+
+    // One-click email copy
+    const copyBtn = document.getElementById('copyEmailBtn');
+    const copyStatus = document.getElementById('copyStatus');
+    copyBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText('myanurag0202@gmail.com').then(() => {
+        copyStatus.textContent = 'Copied ✓';
+        setTimeout(() => (copyStatus.textContent = 'Copy'), 2000);
+      });
+    });
+  </script>
+</body>
+</html>
